@@ -5,6 +5,7 @@ import com.friedstudios.banco_lados.models.enums.AccountType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Id;
 
 @Entity(name = "account")
 public class AccountEntity {
