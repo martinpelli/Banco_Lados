@@ -14,18 +14,25 @@ public class AccountEntity {
     private String cbu;
     @Enumerated(EnumType.STRING)
     private AccountType type;
+    private String userId;
+
 
     public AccountEntity(){
-
     }
-    public AccountEntity(Long number, String cbu, AccountType type){
+
+    public AccountEntity(Long number, String cbu, AccountType type,String userId){
         this.number = number;
         this.cbu = cbu;
         this.type = type;
+        this.userId = userId;
     }
 
     public Long getNumber() {
         return number;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public String getCbu() {
