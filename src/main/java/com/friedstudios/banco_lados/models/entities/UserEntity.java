@@ -3,7 +3,7 @@ package com.friedstudios.banco_lados.models.entities;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name = "user")
+@Entity(name = "users")
 public class UserEntity {
     @Id
     private String dni;
@@ -35,5 +35,9 @@ public class UserEntity {
 
     public String getAdress() {
         return adress;
+    }
+
+    public String fullName(){
+        return firstname + " "+ lastName;
     }
 }

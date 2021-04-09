@@ -1,32 +1,44 @@
 package com.friedstudios.banco_lados.controllers;
 
 
+import com.friedstudios.banco_lados.models.dto.NewTransactionDTO;
+import com.friedstudios.banco_lados.models.dto.TransactionsDTO;
 import com.friedstudios.banco_lados.models.entities.TransactionEntity;
 import com.friedstudios.banco_lados.models.repositories.TransactionRepositories;
-import org.springframework.web.bind.annotation.*;
+import com.friedstudios.banco_lados.services.TransactionService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.math.BigInteger;
-import java.util.List;
+
 
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping("/transactions")
 public class TransactionControllers {
 
-    private final TransactionRepositories transactionRepositories;
+
+    private final TransactionService transactionService;
 
 
-    public TransactionControllers(TransactionRepositories transactionRepositories) {
-        this.transactionRepositories = transactionRepositories;
+    public TransactionControllers(TransactionService transactionService) {
+
+        this.transactionService = transactionService;
     }
 
-    @GetMapping("/{id}")
-    public List<TransactionEntity> getTransaction(@PathVariable BigInteger id) {
-        return transactionRepositories.findAllById(id);
+    @GetMapping("/{accountNumber}")
+    public ResponseEntity <TransactionsDTO> getTransactionsForAccount(@PathVariable Long accountNumber){
+
+        return new ResponseEntity<>(transactionService.getTransactions(accountNumber), HttpStatus.NOT_FOUND) ;
     }
 
     @PostMapping("/new")
-    public TransactionEntity newAccount(@RequestBody TransactionEntity transactionEntity){
-        return transactionRepositories.save(transactionEntity);
+    public ResponseEntity<String> createTransaction(@RequestBody NewTransactionDTO newTransactionDTO){
+        return transactionService.createTransaction(newTransactionDTO);
     }
 
 

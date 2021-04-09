@@ -6,36 +6,43 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.Currency;
+import java.util.Date;
 
-@Entity(name = "transaction")
+@Entity(name = "transactions")
 public class TransactionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private BigInteger id;
-    private String date;
+    private Date date;
     private BigDecimal amount;
     private String currency;
     private String origin;
     private String destination;
+    private String description;
 
     public TransactionEntity(){
     }
 
-    public TransactionEntity(BigInteger id, String date, BigDecimal amount, String currency, String origin, String destination) {
-        this.id = id;
+    public TransactionEntity(Date date, String description, BigDecimal amount, String currency, String from, String to){
+    }
+
+    public TransactionEntity(Date date, BigDecimal amount, String currency, String origin, String destination, String description) {
         this.date = date;
         this.amount = amount;
         this.currency = currency;
         this.origin = origin;
         this.destination = destination;
+        this.description = description;
     }
 
     public BigInteger getId() {
         return id;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -53,5 +60,9 @@ public class TransactionEntity {
 
     public String getDestination() {
         return destination;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

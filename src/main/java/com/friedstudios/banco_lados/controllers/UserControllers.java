@@ -2,13 +2,14 @@ package com.friedstudios.banco_lados.controllers;
 
 import com.friedstudios.banco_lados.models.entities.UserEntity;
 import com.friedstudios.banco_lados.models.repositories.UserRepositories;
-import org.springframework.web.bind.annotation.*;
 
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserControllers {
 
     private final UserRepositories userRepositories;
@@ -18,10 +19,7 @@ public class UserControllers {
         this.userRepositories = userRepositories;
     }
 
-    @GetMapping("/{dni}")
-    public List<UserEntity> getUser(@PathVariable String dni) {
-        return userRepositories.findAllByDni(dni);
-    }
+
 
     @PostMapping("/new")
     public UserEntity newUser(@RequestBody UserEntity userEntity){

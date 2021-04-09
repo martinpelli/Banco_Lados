@@ -7,7 +7,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
-@Entity(name = "account")
+@Entity(name = "accounts")
 public class AccountEntity {
     @Id
     private Long number;
