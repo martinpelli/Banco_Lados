@@ -12,9 +12,11 @@ public class TransactionMapper {
     public TransactionEntity mapTransactionDTOtoTransactionEntity(NewTransactionDTO newTransactionDTO){
         return new TransactionEntity(new Date(),
                 newTransactionDTO.getAmount(),
-                newTransactionDTO.getDescription(),
                 newTransactionDTO.getCurrency(),
                 newTransactionDTO.getFrom(),
-                newTransactionDTO.getTo());
+                newTransactionDTO.getTo(),
+                newTransactionDTO.getDescription());
+
+
     }
 }

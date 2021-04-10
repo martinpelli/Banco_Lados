@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,14 +73,50 @@ public class TransactionService {
 
         }
 
-    public ResponseEntity createTransaction(NewTransactionDTO newTransactionDTO){
-        try{
-            TransactionEntity transactionEntity = transactionMapper.mapTransactionDTOtoTransactionEntity(newTransactionDTO);
-            transactionRepositories.save(transactionEntity);
-            return new ResponseEntity<>("Transacción Creada", HttpStatus.OK);
-        }catch(Exception e){
-            return new ResponseEntity<>("Algo salió mal",HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity createTransaction(NewTransactionDTO newTransactionDTO) {
+        TransactionEntity transactionEntity = transactionMapper.mapTransactionDTOtoTransactionEntity(newTransactionDTO);
+        AccountEntity accountEntity = accountsRepositories.findByNumber(Long.parseLong(transactionEntity.getDestination()));
+        if (transactionEntity.getOrigin().equals(transactionEntity.getDestination())) {
+            return new ResponseEntity<>("Error al crear la transacción. El origen y el destino de la transacción no puede ser el mismo, salame.", HttpStatus.BAD_REQUEST);
+        }else if (accountEntity == null){
+            return new ResponseEntity<>("Error al crear la transacción. El usuario de destino es un fantasma.", HttpStatus.BAD_REQUEST);
+        }else if(transactionEntity.getAmount().intValue() < 1){
+            return new ResponseEntity<>("Error al crear la transacción. Sos re pobre.", HttpStatus.BAD_REQUEST);
+        } else {
+            try {
+                transactionRepositories.save(transactionEntity);
+                return new ResponseEntity<>("Transacción Creada", HttpStatus.OK);
+
+            } catch (Exception e) {
+                return new ResponseEntity<>("Algo salió mal", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
         }
+    }
+
+    public TransactionDTO getTransactionId(BigInteger id){
+        TransactionEntity transactionsEntities = transactionRepositories.findById(id);
+        TransactionEntity transactionsEntity = transactionsEntities;
+        AccountEntity toAccountEntity = accountsRepositories.findByNumber(Long.parseLong(transactionsEntity.getDestination()));
+        AccountEntity fromAccountEntity = accountsRepositories.findByNumber(Long.parseLong(transactionsEntity.getOrigin()));
+        UserEntity toUserEntity = userRepositories.findByDni(toAccountEntity.getUserId());
+        UserEntity fromUserEntity = userRepositories.findByDni(fromAccountEntity.getUserId());
+        String transactionType;
+        if(transactionsEntity.getOrigin().equals(transactionsEntity.getId().toString())){
+            transactionType = "GASTO";
+        }
+        else{
+            transactionType = "INGRESO";
+        }
+       TransactionDTO transactionDTO = new TransactionDTO(
+                transactionsEntity.getDate().toString(),
+                transactionsEntity.getAmount(),
+                transactionsEntity.getCurrency().toString(),
+                fromUserEntity.fullName() + "/CBU: "+ fromAccountEntity.getCbu(),
+                toUserEntity.fullName() + "/CBU: "+ toAccountEntity.getCbu(),
+                transactionsEntity.getDescription(),
+                transactionType);
+        return  transactionDTO;
 
     }
     }

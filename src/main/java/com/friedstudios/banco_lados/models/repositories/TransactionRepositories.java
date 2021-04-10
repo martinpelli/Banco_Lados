@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface TransactionRepositories extends CrudRepository<TransactionEntity, Long> {
     List<TransactionEntity> findAllById(BigInteger id);
+    TransactionEntity findById(BigInteger id);
 
     List<TransactionEntity> findAllByOriginOrDestination(String accountNumber, String accountNumber1);
 }

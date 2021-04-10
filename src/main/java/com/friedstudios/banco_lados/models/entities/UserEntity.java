@@ -2,6 +2,7 @@ package com.friedstudios.banco_lados.models.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Dictionary;
 
 @Entity(name = "users")
 public class UserEntity {
@@ -40,4 +41,5 @@ public class UserEntity {
     public String fullName(){
         return firstname + " "+ lastName;
     }
+
 }
