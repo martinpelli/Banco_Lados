@@ -1,8 +1,6 @@
 package com.friedstudios.banco_lados.services;
 
-import com.friedstudios.banco_lados.models.dto.NewTransactionDTO;
-import com.friedstudios.banco_lados.models.dto.TransactionDTO;
-import com.friedstudios.banco_lados.models.dto.TransactionsDTO;
+import com.friedstudios.banco_lados.models.dto.*;
 import com.friedstudios.banco_lados.models.entities.AccountEntity;
 import com.friedstudios.banco_lados.models.entities.TransactionEntity;
 import com.friedstudios.banco_lados.models.entities.UserEntity;
@@ -77,11 +75,11 @@ public class TransactionService {
         TransactionEntity transactionEntity = transactionMapper.mapTransactionDTOtoTransactionEntity(newTransactionDTO);
         AccountEntity accountEntity = accountsRepositories.findByNumber(Long.parseLong(transactionEntity.getDestination()));
         if (transactionEntity.getOrigin().equals(transactionEntity.getDestination())) {
-            return new ResponseEntity<>("Error al crear la transacción. El origen y el destino de la transacción no puede ser el mismo, salame.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error al crear la transacción. El origen y el destino de la transacción no puede ser el mismo.", HttpStatus.BAD_REQUEST);
         }else if (accountEntity == null){
-            return new ResponseEntity<>("Error al crear la transacción. El usuario de destino es un fantasma.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error al crear la transacción. La cuenta de destino no existe", HttpStatus.BAD_REQUEST);
         }else if(transactionEntity.getAmount().intValue() < 1){
-            return new ResponseEntity<>("Error al crear la transacción. Sos re pobre.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error al crear la transacción. Error en el monto.", HttpStatus.BAD_REQUEST);
         } else {
             try {
                 transactionRepositories.save(transactionEntity);
@@ -94,29 +92,28 @@ public class TransactionService {
         }
     }
 
-    public TransactionDTO getTransactionId(BigInteger id){
-        TransactionEntity transactionsEntities = transactionRepositories.findById(id);
-        TransactionEntity transactionsEntity = transactionsEntities;
-        AccountEntity toAccountEntity = accountsRepositories.findByNumber(Long.parseLong(transactionsEntity.getDestination()));
-        AccountEntity fromAccountEntity = accountsRepositories.findByNumber(Long.parseLong(transactionsEntity.getOrigin()));
+    public TransactionDetailedDTO getTransactionId(BigInteger id){
+        TransactionEntity transactionEntity = transactionRepositories.findById(id);
+        AccountEntity toAccountEntity = accountsRepositories.findByNumber(Long.parseLong(transactionEntity.getDestination()));
+        AccountEntity fromAccountEntity = accountsRepositories.findByNumber(Long.parseLong(transactionEntity.getOrigin()));
         UserEntity toUserEntity = userRepositories.findByDni(toAccountEntity.getUserId());
         UserEntity fromUserEntity = userRepositories.findByDni(fromAccountEntity.getUserId());
-        String transactionType;
-        if(transactionsEntity.getOrigin().equals(transactionsEntity.getId().toString())){
-            transactionType = "GASTO";
-        }
-        else{
-            transactionType = "INGRESO";
-        }
-       TransactionDTO transactionDTO = new TransactionDTO(
-                transactionsEntity.getDate().toString(),
-                transactionsEntity.getAmount(),
-                transactionsEntity.getCurrency().toString(),
-                fromUserEntity.fullName() + "/CBU: "+ fromAccountEntity.getCbu(),
-                toUserEntity.fullName() + "/CBU: "+ toAccountEntity.getCbu(),
-                transactionsEntity.getDescription(),
-                transactionType);
-        return  transactionDTO;
+        AccountInfoDTO accountInfoDTOfrom = new AccountInfoDTO(
+                fromUserEntity.getFirstname(),
+                fromUserEntity.getLastName(),
+                fromAccountEntity.getCbu());
+        AccountInfoDTO accountInfoDTOto = new AccountInfoDTO(
+                toUserEntity.getFirstname(),
+                toUserEntity.getLastName(),
+                toAccountEntity.getCbu());
+        TransactionDetailedDTO transactionDetailedDTO = new TransactionDetailedDTO(
+                transactionEntity.getDate().toString(),
+                transactionEntity.getAmount(),
+                transactionEntity.getCurrency().toString(),
+                transactionEntity.getDescription(),
+                accountInfoDTOfrom,
+                accountInfoDTOto);
+        return  transactionDetailedDTO;
 
     }
     }
