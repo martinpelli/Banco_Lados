@@ -2,6 +2,7 @@ package com.friedstudios.banco_lados.controllers;
 
 
 import com.friedstudios.banco_lados.models.dto.NewTransactionDTO;
+import com.friedstudios.banco_lados.models.dto.TransactionDetailedDTO;
 import com.friedstudios.banco_lados.models.dto.TransactionsDTO;
 import com.friedstudios.banco_lados.models.dto.TransactionDTO;
 
@@ -34,13 +35,13 @@ public class TransactionControllers {
     @GetMapping("/all/{accountNumber}")
     public ResponseEntity <TransactionsDTO> getTransactionsForAccount(@PathVariable Long accountNumber){
 
-        return new ResponseEntity<>(transactionService.getTransactions(accountNumber), HttpStatus.NOT_FOUND) ;
+        return new ResponseEntity<>(transactionService.getTransactions(accountNumber), HttpStatus.OK) ;
     }
 
     @GetMapping("/{transactionId}")
-    public ResponseEntity <TransactionDTO> getTransactionsId(@PathVariable BigInteger transactionId){
+    public ResponseEntity <TransactionDetailedDTO> getTransactionsId(@PathVariable BigInteger transactionId){
 
-        return new ResponseEntity<>(transactionService.getTransactionId(transactionId), HttpStatus.NOT_FOUND) ;
+        return new ResponseEntity<>(transactionService.getTransactionId(transactionId), HttpStatus.OK) ;
     }
 
     @PostMapping("/new")
