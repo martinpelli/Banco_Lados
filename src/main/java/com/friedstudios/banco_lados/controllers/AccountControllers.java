@@ -1,8 +1,11 @@
 package com.friedstudios.banco_lados.controllers;
 
 
+import com.friedstudios.banco_lados.models.dto.NewAccountDTO;
 import com.friedstudios.banco_lados.models.entities.AccountEntity;
 import com.friedstudios.banco_lados.models.repositories.AccountsRepositories;
+import com.friedstudios.banco_lados.services.AccountsService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +19,11 @@ import java.util.List;
 @RequestMapping("/accounts")
 public class AccountControllers {
 
+    private final AccountsService accountsService;
     private final  AccountsRepositories accountsRepositories;
 
-    public AccountControllers(AccountsRepositories accountsRepositories) {
+    public AccountControllers(AccountsService accountsService, AccountsRepositories accountsRepositories) {
+        this.accountsService = accountsService;
         this.accountsRepositories = accountsRepositories;
     }
 
@@ -28,8 +33,8 @@ public class AccountControllers {
     }
 
     @PostMapping("/new")
-    public AccountEntity newAccount(@RequestBody AccountEntity accountEntity){
-        return accountsRepositories.save(accountEntity);
+    public ResponseEntity<String> newAccount(@RequestBody NewAccountDTO newAccountDTO){
+        return accountsService.createAccount(newAccountDTO);
     }
 
 

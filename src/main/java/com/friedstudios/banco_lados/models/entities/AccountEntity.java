@@ -16,8 +16,12 @@ public class AccountEntity {
     private AccountType type;
     private String userId;
 
+    public AccountEntity() {
 
-    public AccountEntity(){
+    }
+
+
+    public AccountEntity(Long number, String cbu, AccountType type){
     }
 
     public AccountEntity(Long number, String cbu, AccountType type,String userId){
