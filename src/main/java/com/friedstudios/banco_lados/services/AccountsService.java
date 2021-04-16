@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountsService {
 
@@ -22,6 +24,10 @@ public class AccountsService {
         this.accountsRepositories = accountsRepositories;
         this.accountMapper = accountMapper;
         this.userRepositories = userRepositories;
+    }
+
+    public List<AccountEntity> getAccountsByUserId(String userid){
+        return accountsRepositories.findAllByUserId(userid);
     }
 
     public ResponseEntity createAccount(NewAccountDTO newAccountDTO) {

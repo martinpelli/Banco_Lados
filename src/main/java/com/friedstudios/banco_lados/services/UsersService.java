@@ -2,7 +2,6 @@ package com.friedstudios.banco_lados.services;
 
 import com.friedstudios.banco_lados.exceptions.BadRequestException;
 import com.friedstudios.banco_lados.models.dto.NewUserDTO;
-import com.friedstudios.banco_lados.models.entities.AccountEntity;
 import com.friedstudios.banco_lados.models.entities.UserEntity;
 import com.friedstudios.banco_lados.models.mappers.UserMapper;
 import com.friedstudios.banco_lados.models.repositories.UserRepositories;
@@ -35,5 +34,9 @@ public class UsersService {
             return new ResponseEntity<>("Algo salió mal", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    public UserEntity getUsersByDni(String dni){
+        return userRepositories.findByDni(dni);
     }
 }

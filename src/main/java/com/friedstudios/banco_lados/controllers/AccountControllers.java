@@ -28,8 +28,8 @@ public class AccountControllers {
     }
 
     @GetMapping("/{userId}")
-    public List<AccountEntity> getUserAccounts(@PathVariable String userId) {
-        return accountsRepositories.findAllByUserId(userId);
+    public List<AccountEntity> getAccountsByUserId(@PathVariable String userId) {
+        return accountsService.getAccountsByUserId(userId);
     }
 
     @PostMapping("/new")
