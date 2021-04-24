@@ -20,11 +20,9 @@ import java.util.List;
 public class AccountControllers {
 
     private final AccountsService accountsService;
-    private final  AccountsRepositories accountsRepositories;
 
-    public AccountControllers(AccountsService accountsService, AccountsRepositories accountsRepositories) {
+    public AccountControllers(AccountsService accountsService) {
         this.accountsService = accountsService;
-        this.accountsRepositories = accountsRepositories;
     }
 
     @GetMapping("/{userId}")

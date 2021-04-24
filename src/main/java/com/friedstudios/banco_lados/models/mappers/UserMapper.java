@@ -1,8 +1,6 @@
 package com.friedstudios.banco_lados.models.mappers;
 
-import com.friedstudios.banco_lados.models.dto.NewAccountDTO;
 import com.friedstudios.banco_lados.models.dto.NewUserDTO;
-import com.friedstudios.banco_lados.models.entities.AccountEntity;
 import com.friedstudios.banco_lados.models.entities.UserEntity;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +12,9 @@ public class UserMapper {
                 newUserDTO.getDni(),
                 newUserDTO.getFirstname(),
                 newUserDTO.getLastName(),
-                newUserDTO.getAdress());
+                newUserDTO.getAdress(),
+                newUserDTO.getUsername(),
+                newUserDTO.getPassword());
 
 
     }
