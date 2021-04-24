@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserControllers {
 
-    private final UserRepositories userRepositories;
     private final UsersService usersService;
 
 
-    public UserControllers(UserRepositories userRepositories, UsersService usersService) {
-        this.userRepositories = userRepositories;
+    public UserControllers(UsersService usersService) {
         this.usersService = usersService;
     }
 

@@ -26,8 +26,6 @@ public class TransactionDTO {
         this.type = type;
     }
 
-    public TransactionDTO(BigDecimal amount, String toString, String from, String to, String description) {
-    }
 
     public String getDescription() {
         return description;
