@@ -4,7 +4,7 @@ package com.friedstudios.banco_lados.controllers;
 import com.friedstudios.banco_lados.models.dto.NewTransactionDTO;
 import com.friedstudios.banco_lados.models.dto.TransactionDetailedDTO;
 import com.friedstudios.banco_lados.models.dto.TransactionsDTO;
-import com.friedstudios.banco_lados.models.dto.TransactionDTO;
+
 
 import com.friedstudios.banco_lados.services.TransactionService;
 import org.springframework.http.HttpStatus;

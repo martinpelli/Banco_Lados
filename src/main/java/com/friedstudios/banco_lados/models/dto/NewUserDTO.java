@@ -1,6 +1,7 @@
 package com.friedstudios.banco_lados.models.dto;
 
 public class NewUserDTO {
+
     private String dni;
     private String firstname;
     private String lastName;

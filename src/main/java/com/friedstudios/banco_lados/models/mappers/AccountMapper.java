@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AccountMapper {
-
     public AccountEntity mapAccountDTOtoAccountEntity(NewAccountDTO newAccountDTO){
         return new AccountEntity(
                 newAccountDTO.getNumber(),

@@ -11,6 +11,7 @@ import java.util.Date;
 @Entity(name = "transactions")
 public class TransactionEntity {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private BigInteger id;

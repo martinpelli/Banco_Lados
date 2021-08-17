@@ -8,7 +8,6 @@ import java.util.Date;
 
 @Component
 public class TransactionMapper {
-
     public TransactionEntity mapTransactionDTOtoTransactionEntity(NewTransactionDTO newTransactionDTO){
         return new TransactionEntity(new Date(),
                 newTransactionDTO.getAmount(),

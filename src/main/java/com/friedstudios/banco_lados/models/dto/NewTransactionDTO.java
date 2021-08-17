@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 
 public class NewTransactionDTO {
+
     private BigDecimal amount;
     private String currency;
     private String from;

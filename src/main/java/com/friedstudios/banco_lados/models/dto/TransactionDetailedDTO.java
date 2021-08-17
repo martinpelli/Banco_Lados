@@ -3,7 +3,6 @@ package com.friedstudios.banco_lados.models.dto;
 import java.math.BigDecimal;
 
 public class TransactionDetailedDTO {
-
     private String description;
     private String date;
     private BigDecimal amount;

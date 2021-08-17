@@ -1,6 +1,7 @@
 package com.friedstudios.banco_lados.models.dto;
 
 public class AccountInfoDTO {
+
     private String firstname;
     private String lastname;
     private String cbu;

@@ -3,7 +3,6 @@ package com.friedstudios.banco_lados.controllers;
 
 import com.friedstudios.banco_lados.models.dto.NewAccountDTO;
 import com.friedstudios.banco_lados.models.entities.AccountEntity;
-import com.friedstudios.banco_lados.models.repositories.AccountsRepositories;
 import com.friedstudios.banco_lados.services.AccountsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

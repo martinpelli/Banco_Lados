@@ -2,11 +2,11 @@ package com.friedstudios.banco_lados.models.mappers;
 
 import com.friedstudios.banco_lados.models.dto.NewUserDTO;
 import com.friedstudios.banco_lados.models.entities.UserEntity;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
-
     public UserEntity mapUserDTOtoUserEntity(NewUserDTO newUserDTO){
         return new UserEntity(
                 newUserDTO.getDni(),
